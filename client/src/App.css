@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Electrolize&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: "Electrolize", sans-serif;
+  @apply bg-gray-50;
+}
+.ant-btn-primary {
+  background-color: #1677ff;
+}
+/* background of invoice template*/
+.bg-custom {
+  background-image: url("https://tse4.mm.bing.net/th?id=OIP.blai6Lxh0j0ynddpz2jI4QHaCf&pid=Api&P=0&h=180");
+}
+
+@media (min-width: 768px) {
+  body {
+    overflow: hidden;
+  }
+
+  .categories::-webkit-scrollbar {
+    display: none;
+  }
+}
