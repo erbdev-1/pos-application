@@ -6,7 +6,7 @@ function ProductItem({ item }) {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(addProduct(item));
+    dispatch(addProduct({ ...item, quantity: 1 })); // Add the product to the cart items array in the state  with a quantity of 1
   };
 
   console.log(cart.cartItems);

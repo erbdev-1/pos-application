@@ -8,7 +8,16 @@ const cartSlice = createSlice({
   },
   reducers: {
     addProduct: (state, action) => {
-      state.cartItems.push(action.payload); // Add the product to the cart items array in the state
+      const findCartItem = state.cartItems.find(
+        (item) => item._id === action.payload._id
+      ); // Find the product in the cart items array
+
+      if (findCartItem) {
+        findCartItem.quantity = findCartItem.quantity + 1; // Increase the quantity of the product by 1
+        // Add the product to the cart items array in the state
+      } else {
+        state.cartItems.push(action.payload); // Add the product to the cart items array in the state
+      }
     },
   },
 });
