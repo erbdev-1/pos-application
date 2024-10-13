@@ -1,16 +1,14 @@
-import { Button, Form, Input, message, Table } from "antd";
+import { Button, Form, Input, message, Modal, Select, Table } from "antd";
 import { useEffect, useState } from "react";
 
 //!Edit Component
 
-const Edit = ({
-  isEditModalOpen,
-  setIsEditModalOpen,
-  categories,
-  setCategories,
-}) => {
+const Edit = () => {
   const [products, setProducts] = useState([]);
-  console.log(products);
+  const [categories, setCategories] = useState([]);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState({});
+  const [form] = Form.useForm();
 
   // State for managing the row currently being edited
   useEffect(() => {
@@ -26,20 +24,42 @@ const Edit = ({
     getProducts();
   }, []);
 
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/categories/get-all");
+        const data = await res.json();
+        data &&
+          setCategories(
+            data.map((item) => {
+              return { ...item, value: item.title };
+            })
+          );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCategories();
+  }, []);
+
   // Function to handle form submission
 
   const onFinish = (values) => {
     console.log(values);
     try {
-      fetch("http://localhost:5000/api/categories/update-category", {
+      fetch("http://localhost:5000/api/products/update-product", {
         method: "PUT",
-        body: JSON.stringify({ ...values }),
+        body: JSON.stringify({ ...values, productId: editingItem._id }),
         headers: { "Content-type": "application/json; charset=UTF-8" },
       });
-      message.success("The category has been updated successfully.");
-      setCategories(
-        categories.map((item) => {
-          return item;
+      message.success("The product has been updated successfully.");
+      setProducts(
+        products.map((item) => {
+          if (item._id === editingItem._id) {
+            return values;
+          } else {
+            return item;
+          }
         })
       );
     } catch (error) {
@@ -104,12 +124,16 @@ const Edit = ({
       render: (_, record) => {
         return (
           <div>
-            <Button type="link" className="pl-0">
+            <Button
+              type="link"
+              className="pl-0"
+              onClick={() => {
+                setIsEditModalOpen(true), setEditingItem(record);
+              }}
+            >
               Edit
             </Button>
-            <Button type="link" htmlType="submit" className="text-gray-500">
-              Save
-            </Button>
+
             <Button
               type="link"
               danger
@@ -126,7 +150,7 @@ const Edit = ({
   // Return statement
 
   return (
-    <Form onFinish={onFinish}>
+    <>
       <Table
         bordered
         dataSource={products}
@@ -137,7 +161,79 @@ const Edit = ({
           y: 600,
         }}
       />
-    </Form>
+      <Modal
+        title="Add New Product"
+        open={isEditModalOpen}
+        onCancel={() => setIsEditModalOpen(false)} // Close the modal
+        footer={false} //Delete the bottom part of the modal
+      >
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+          form={form}
+          initialValues={editingItem}
+        >
+          <Form.Item
+            name="title"
+            label="Add Product"
+            rules={[
+              { required: true, message: "Product Field Cannot Be Empty!" },
+            ]}
+          >
+            <Input placeholder="Please write the product name." />
+          </Form.Item>
+          <Form.Item
+            name="img"
+            label="Product Image"
+            rules={[
+              {
+                required: true,
+                message: "Product Image Field Cannot Be Empty!",
+              },
+            ]}
+          >
+            <Input placeholder="Please write the product image" />
+          </Form.Item>
+          <Form.Item
+            name="price"
+            label="Product Price"
+            rules={[
+              {
+                required: true,
+                message: "Product Price Field Cannot Be Empty!",
+              },
+            ]}
+          >
+            <Input placeholder="Please write the product price" />
+          </Form.Item>
+          <Form.Item
+            name="category"
+            label="Select Category"
+            rules={[
+              { required: true, message: "Category Field Cannot Be Empty!" },
+            ]}
+          >
+            <Select
+              showSearch
+              placeholder="Search to Select"
+              optionFilterProp="children"
+              filterSort={(optionA, optionB) =>
+                (optionA?.title ?? "")
+                  .toLowerCase()
+                  .localeCompare((optionB?.title ?? "").toLowerCase())
+              }
+              options={categories}
+            />
+          </Form.Item>
+
+          <Form.Item className="flex justify-end mb-0">
+            <Button type="primary" htmlType="submit">
+              Update
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+    </>
   );
 };
 
