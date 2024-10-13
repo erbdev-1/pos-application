@@ -70,16 +70,16 @@ const Edit = () => {
 
   // Function to delete a category
 
-  const deleteCategory = (id) => {
+  const deleteProduct = (id) => {
     if (window.confirm("Are you sure?")) {
       try {
-        fetch("http://localhost:5000/api/categories/delete-category", {
+        fetch("http://localhost:5000/api/products/delete-product", {
           method: "DELETE",
-          body: JSON.stringify({ categoryId: id }),
+          body: JSON.stringify({ productId: id }),
           headers: { "Content-type": "application/json; charset=UTF-8" },
         });
-        message.success("The category has been deleted successfully.");
-        setCategories(categories.filter((item) => item._id !== id));
+        message.success("The product has been deleted successfully.");
+        setProducts(products.filter((item) => item._id !== id));
       } catch (error) {
         message.error("Something went wrong.");
         console.log(error);
@@ -137,7 +137,7 @@ const Edit = () => {
             <Button
               type="link"
               danger
-              onClick={() => deleteCategory(record._id)}
+              onClick={() => deleteProduct(record._id)}
             >
               Delete
             </Button>
