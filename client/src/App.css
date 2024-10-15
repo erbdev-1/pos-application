@@ -12,6 +12,10 @@ body {
 .ant-btn-primary {
   background-color: #1677ff;
 }
+.menu-link .anticon {
+  display: flex;
+  justify-content: center;
+}
 /* background of invoice template*/
 .bg-custom {
   background-image: url("https://tse4.mm.bing.net/th?id=OIP.blai6Lxh0j0ynddpz2jI4QHaCf&pid=Api&P=0&h=180");

@@ -43,12 +43,12 @@ const Header = () => {
 
           <Badge
             count={cart.cartItems.length}
-            offset={[0, 6]}
+            offset={[0, 0]}
             className="md:flex hidden"
           >
             <Link
               to={"/cart"}
-              className="menu-link flex flex-col items-center hover:text-[#40a9ff] transition-all"
+              className="menu-link flex flex-col hover:text-[#40a9ff] transition-all"
             >
               <ShoppingCartOutlined className="md:text-2xl text-xl" />
               <span className="md:text-xs text-[10px]">Shopping Cart</span>
@@ -56,7 +56,7 @@ const Header = () => {
           </Badge>
           <Link
             to={"/bills"}
-            className="menu-link flex flex-col items-center hover:text-[#40a9ff] transition-all"
+            className="menu-link flex flex-col  hover:text-[#40a9ff] transition-all"
           >
             <CopyOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Invoice</span>
@@ -90,10 +90,10 @@ const Header = () => {
             <span className="md:text-xs text-[10px]">Log out</span>
           </Link>
         </div>
-        <Badge count={5} offset={[0, 6]} className="md:hidden flex">
+        <Badge count={5} offset={[0, 0]} className="md:hidden flex">
           <Link
             to={"/"}
-            className="menu-link flex flex-col items-center hover:text-[#40a9ff] transition-all"
+            className="menu-link flex flex-col  hover:text-[#40a9ff] transition-all"
           >
             <ShoppingCartOutlined className="text-2xl" />
             <span className="md:text-xs text-[10px]">Shopping Cart</span>
