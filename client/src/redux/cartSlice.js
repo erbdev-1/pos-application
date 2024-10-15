@@ -5,6 +5,7 @@ const cartSlice = createSlice({
   initialState: {
     cartItems: [],
     total: 0,
+    tax: 20,
   },
   reducers: {
     addProduct: (state, action) => {
@@ -18,11 +19,15 @@ const cartSlice = createSlice({
       } else {
         state.cartItems.push(action.payload); // Add the product to the cart items array in the state
       }
+
+      state.total += action.payload.price; // Increase the total by the price of the product
     },
     deleteProduct: (state, action) => {
       state.cartItems = state.cartItems.filter(
         (item) => item._id !== action.payload._id
       );
+
+      state.total -= action.payload.price * action.payload.quantity; // Decrease the total by the price of the product multiplied by the quantity of the product
     },
   },
 });
