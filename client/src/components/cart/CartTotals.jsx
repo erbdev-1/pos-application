@@ -37,7 +37,7 @@ const CartTotals = () => {
                     </span>
                   </div>
                 </div>
-                <div className="flex items-center gap-x-1">
+                <div className="flex items-center ">
                   <Button
                     type="primary"
                     size="small"
