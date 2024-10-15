@@ -1,3 +1,4 @@
+import { message } from "antd";
 import { addProduct } from "../../redux/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -7,6 +8,7 @@ function ProductItem({ item }) {
 
   const handleClick = () => {
     dispatch(addProduct({ ...item, quantity: 1 })); // Add the product to the cart items array in the state  with a quantity of 1
+    message.success("Product added to cart");
   };
 
   console.log(cart.cartItems);

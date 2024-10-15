@@ -48,9 +48,18 @@ const cartSlice = createSlice({
       }
       state.total -= cartItem.price; // Decrease the total by the price of the product
     },
+    reset: (state) => {
+      state.cartItems = [];
+      state.total = 0;
+    },
   },
 });
 
-export const { addProduct, deleteProduct, increaseQuantity, decreaseQuantity } =
-  cartSlice.actions;
+export const {
+  addProduct,
+  deleteProduct,
+  increaseQuantity,
+  decreaseQuantity,
+  reset,
+} = cartSlice.actions;
 export default cartSlice.reducer;

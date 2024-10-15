@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, message } from "antd";
 import {
   DeleteOutlined,
   PlusCircleOutlined,
@@ -9,6 +9,7 @@ import {
   deleteProduct,
   increaseQuantity,
   decreaseQuantity,
+  reset,
 } from "../../redux/cartSlice";
 
 const CartTotals = () => {
@@ -28,7 +29,10 @@ const CartTotals = () => {
                     src={item.img}
                     alt=""
                     className="w-16 h-16 object-cover cursor-pointer"
-                    onClick={() => dispatch(deleteProduct(item))}
+                    onClick={() => {
+                      dispatch(deleteProduct(item));
+                      message.success("Item deleted successfully");
+                    }}
                   />
                   <div className="flex flex-col ml-2">
                     <b>{item.title}</b>
@@ -61,6 +65,7 @@ const CartTotals = () => {
                           )
                         ) {
                           dispatch(decreaseQuantity(item));
+                          message.success("Item deleted successfully");
                         }
                       } else {
                         dispatch(decreaseQuantity(item));
@@ -94,7 +99,12 @@ const CartTotals = () => {
           </div>
         </div>
         <div className="py-4 px-2">
-          <Button type="primary" size="large" className="w-full">
+          <Button
+            type="primary"
+            size="large"
+            className="w-full"
+            disabled={cart.cartItems.length === 0}
+          >
             Create Order
           </Button>
           <Button
@@ -103,6 +113,15 @@ const CartTotals = () => {
             className="w-full mt-2 flex items-center justify-center"
             icon={<DeleteOutlined />}
             danger
+            disabled={cart.cartItems.length === 0}
+            onClick={() => {
+              if (
+                window.confirm("Are you sure you want to delete all items?")
+              ) {
+                dispatch(reset());
+                message.success("All items deleted successfully");
+              }
+            }}
           >
             Cancel Order
           </Button>
