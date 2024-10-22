@@ -7,6 +7,7 @@ import { useState } from "react";
 const RegisterPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+
   const onFinish = async (values) => {
     setLoading(true);
     try {
@@ -25,6 +26,7 @@ const RegisterPage = () => {
     } catch (error) {
       message.error("Failed to register user");
       console.log(error);
+      navigate("/register");
     }
   };
   return (

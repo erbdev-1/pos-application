@@ -7,6 +7,7 @@ import AuthCarousel from "../../components/auth/AuthCarousel";
 const LoginPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+
   const onFinish = async (values) => {
     setLoading(true);
     try {
@@ -26,17 +27,17 @@ const LoginPage = () => {
           JSON.stringify({ username: user.username, email: user.email })
         );
         message.success("User logged in successfully");
-        navigate("/login");
-        setLoading(false);
+        navigate("/");
       } else if (res.status === 404) {
         message.error("User not found!");
       } else if (res.status === 403) {
         message.error("Invalid password!");
-        setLoading(false);
       }
+      setLoading(false);
     } catch (error) {
       message.error("Failed to log in user");
       console.log(error);
+      setLoading(false);
     }
   };
   return (
@@ -96,7 +97,7 @@ const LoginPage = () => {
           <div className="flex justify-center absolute left-0 bottom-10 w-full">
             Do you have an account?&nbsp;
             <Link to="/register" className="text-blue-600">
-              Sign in now!
+              Register now!
             </Link>
           </div>
         </div>

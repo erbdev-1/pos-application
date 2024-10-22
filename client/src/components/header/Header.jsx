@@ -1,6 +1,6 @@
 /*Use Link with homepage,shoppingcart... */
-import { Link } from "react-router-dom";
-import { Badge, Input } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { Badge, Input, message } from "antd";
 import {
   SearchOutlined,
   HomeOutlined,
@@ -16,7 +16,14 @@ import "./index.css";
 
 const Header = () => {
   const cart = useSelector((state) => state.cart);
-  console.log(cart);
+  const navigate = useNavigate();
+  const logOut = () => {
+    if (window.confirm("Do you want to log out?")) {
+      localStorage.removeItem("userInfo");
+      navigate("/login");
+      message.success("Log out successfully");
+    }
+  };
   return (
     <div className="border-b mb-6">
       <header className="py-4 px-6 flex justify-between items-center gap-10">
@@ -65,10 +72,12 @@ const Header = () => {
             <StockOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Stock</span>
           </Link>
-          <Link to={"/"} className="menu-link ">
-            <LogoutOutlined className="md:text-2xl text-xl" />
-            <span className="md:text-xs text-[10px]">Log out</span>
-          </Link>
+          <div onClick={logOut}>
+            <Link className="menu-link ">
+              <LogoutOutlined className="md:text-2xl text-xl" />
+              <span className="md:text-xs text-[10px]">Log out</span>
+            </Link>
+          </div>
         </div>
         <Badge
           count={cart.cartItems.length}

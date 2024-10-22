@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
 import BillPage from "./pages/BillPage";
@@ -12,13 +12,62 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/bills" element={<BillPage />} />
-        <Route path="/customers" element={<CustomerPage />} />
-        <Route path="/statistic" element={<StatisticPage />} />
-        <Route path="/products" element={<ProductPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/"
+          element={
+            <RouteControl>
+              <HomePage />
+            </RouteControl>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <RouteControl>
+              <CartPage />
+            </RouteControl>
+          }
+        />
+        <Route
+          path="/bills"
+          element={
+            <RouteControl>
+              <BillPage />
+            </RouteControl>
+          }
+        />
+        <Route
+          path="/customers"
+          element={
+            <RouteControl>
+              <CustomerPage />
+            </RouteControl>
+          }
+        />
+        <Route
+          path="/statistic"
+          element={
+            <RouteControl>
+              <StatisticPage />
+            </RouteControl>
+          }
+        />
+        <Route
+          path="/products"
+          element={
+            <RouteControl>
+              <ProductPage />
+            </RouteControl>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <RouteControl>
+              <RegisterPage />
+            </RouteControl>
+          }
+        />
         <Route path="/login" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
@@ -26,3 +75,11 @@ function App() {
 }
 
 export default App;
+
+export const RouteControl = ({ children }) => {
+  if (localStorage.getItem("posUser")) {
+    return children;
+  } else {
+    return <Navigate to="/login" />;
+  }
+};
