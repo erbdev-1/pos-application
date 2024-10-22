@@ -1,6 +1,13 @@
 import { Button, Modal } from "antd";
+import { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 
 const PrintBill = ({ isModalOpen, setIsModalOpen, customer }) => {
+  const componentRef = useRef(); // Create a reference to the component that you want to print using useRef hook
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current, // Pass the component reference to the content property
+  });
   return (
     <Modal
       title="Print Invoice"
@@ -10,7 +17,7 @@ const PrintBill = ({ isModalOpen, setIsModalOpen, customer }) => {
       width={800}
     >
       {/* CREATE BILL TEMPLATE*/}
-      <section className="py-20 bg-custom">
+      <section className="py-20 bg-custom" ref={componentRef}>
         <div className="max-w-5xl mx-auto bg-white px-6">
           <article className="overflow-hidden">
             <div className="logo my-6">
@@ -23,6 +30,7 @@ const PrintBill = ({ isModalOpen, setIsModalOpen, customer }) => {
               <div className="grid grid-cols-3 gap-12">
                 <div className="text-md text-slate-500">
                   <p className="font-bold text-slate-700">Invoice Detail:</p>
+                  <p className="text-green-600">{customer?.customerName}</p>
                   <p> The Bradfield Centre 184</p>
                   <p> Cambridge Science Park Milton Road </p>
                   <p>Cambridge, CB4 0GA</p>
@@ -180,7 +188,7 @@ const PrintBill = ({ isModalOpen, setIsModalOpen, customer }) => {
         </div>
       </section>
       <div className="flex justify-end mt-4">
-        <Button type="primary" size="large">
+        <Button type="primary" size="large" onClick={handlePrint}>
           Print
         </Button>
       </div>

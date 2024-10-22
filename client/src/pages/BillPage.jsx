@@ -85,6 +85,10 @@ const BillPage = () => {
           columns={columns}
           bordered
           pagination={false}
+          scroll={{
+            x: 1000,
+            y: 500,
+          }}
         />
       </div>
       <PrintBill
