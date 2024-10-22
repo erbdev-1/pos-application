@@ -1,14 +1,38 @@
-import { Button, Form, Input, Carousel } from "antd";
+import { Button, Form, Input, Carousel, message } from "antd";
 import { Link } from "react-router-dom";
 import AuthCarousel from "../../components/auth/AuthCarousel";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const onFinish = async (values) => {
+    setLoading(true);
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json ; charset=UTF-8",
+        },
+      });
+      if (res.status === 200) {
+        message.success("User registered successfully");
+        navigate("/login");
+        setLoading(false);
+      }
+    } catch (error) {
+      message.error("Failed to register user");
+      console.log(error);
+    }
+  };
   return (
     <div className="h-screen">
       <div className="flex justify-between h-full">
         <div className="xl:px-20 px-10 w-full flex flex-col h-full justify-center relative ">
           <h1 className="text-center text-5xl font-bold mb-2">LOGO</h1>
-          <Form layout="vertical">
+          <Form layout="vertical" onFinish={onFinish}>
             <Form.Item
               label="Username"
               name={"username"}
@@ -74,6 +98,7 @@ const RegisterPage = () => {
                 htmlType="submit"
                 className="w-full"
                 size="large"
+                loading={loading}
               >
                 Register
               </Button>
