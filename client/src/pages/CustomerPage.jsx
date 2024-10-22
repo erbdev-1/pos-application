@@ -1,36 +1,41 @@
 import { Table } from "antd";
 import Header from "../components/Header/Header";
+import { useEffect, useState } from "react";
 
 const CustomerPage = () => {
-  const dataSource = [
-    {
-      key: "1",
-      name: "Mike",
-      age: 32,
-      address: "10 Downing Street",
-    },
-    {
-      key: "2",
-      name: "John",
-      age: 42,
-      address: "10 Downing Street",
-    },
-  ];
+  const [billItems, setBillItems] = useState([]);
+
+  useEffect(() => {
+    const getBills = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/bills/get-all");
+        const data = await response.json();
+        setBillItems(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getBills();
+  }, []);
+
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Customer Name",
+      dataIndex: "customerName",
+      key: "customerName",
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
+      title: "Phone Number",
+      dataIndex: "customerPhoneNumber",
+      key: "customerPhoneNumber",
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
+      title: "Creation Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text) => {
+        return <span>{text.substring(0, 16)}</span>;
+      },
     },
   ];
   return (
@@ -39,7 +44,7 @@ const CustomerPage = () => {
       <div className="px-6">
         <h1 className="text-4xl font-bold text-center mb-4">Customers</h1>
         <Table
-          dataSource={dataSource}
+          dataSource={billItems}
           columns={columns}
           bordered
           pagination={false}
