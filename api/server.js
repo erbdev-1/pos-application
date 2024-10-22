@@ -2,6 +2,7 @@ const express = require("express"); // import express to create server.
 const mongoose = require("mongoose"); // import mongoose to connect to MongoDB database.
 const dotenv = require("dotenv");
 const cors = require("cors");
+const logger = require("morgan");
 const app = express();
 const PORT = 5000;
 
@@ -27,6 +28,7 @@ const connect = async () => {
 // middlewares
 app.use(express.json()); // to parse JSON data from the client-side.
 app.use(cors()); // to allow cross-origin requests from the client-side.
+app.use(logger("dev")); // to log HTTP requests in the console.
 
 app.use("/api/categories", categoryRoute);
 app.use("/api/products", productRoute);

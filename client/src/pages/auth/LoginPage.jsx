@@ -1,14 +1,56 @@
-import { Button, Carousel, Checkbox, Form, Input } from "antd";
+import { Button, Carousel, Checkbox, Form, Input, message } from "antd";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import AuthCarousel from "../../components/auth/AuthCarousel";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const onFinish = async (values) => {
+    setLoading(true);
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: {
+          "Content-Type": "application/json ; charset=UTF-8",
+        },
+      });
+
+      const user = await res.json();
+
+      if (res.status === 200) {
+        localStorage.setItem(
+          "posUser",
+          JSON.stringify({ username: user.username, email: user.email })
+        );
+        message.success("User logged in successfully");
+        navigate("/login");
+        setLoading(false);
+      } else if (res.status === 404) {
+        message.error("User not found!");
+      } else if (res.status === 403) {
+        message.error("Invalid password!");
+        setLoading(false);
+      }
+    } catch (error) {
+      message.error("Failed to log in user");
+      console.log(error);
+    }
+  };
   return (
     <div className="h-screen">
       <div className="flex justify-between h-full">
         <div className="xl:px-20 px-10 w-full flex flex-col h-full justify-center relative">
           <h1 className="text-center text-5xl font-bold mb-2">LOGO</h1>
-          <Form layout="vertical">
+          <Form
+            layout="vertical"
+            onFinish={onFinish}
+            initialValues={{
+              remember: false,
+            }}
+          >
             <Form.Item
               label="E-mail"
               name={"email"}
@@ -45,6 +87,7 @@ const LoginPage = () => {
                 htmlType="submit"
                 className="w-full"
                 size="large"
+                loading={loading}
               >
                 Sign in
               </Button>
