@@ -8,6 +8,7 @@ const HomePage = () => {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
+  const [search, setSearch] = useState("");
 
   // Fetching all categories from the database and setting the state
   useEffect(() => {
@@ -42,9 +43,10 @@ const HomePage = () => {
     };
     getProducts();
   }, []);
+
   return (
     <>
-      <Header />
+      <Header setSearch={setSearch} />
       {/* HomePage */}
       <div className="home px-6 flex md:flex-row flex-col justify-between gap-10 md:pb-0 pb-24 h-screen">
         <div className="categories  overflow-auto max-h-[calc(100vh_-_112px)] md:pb-64">
@@ -61,6 +63,7 @@ const HomePage = () => {
             filtered={filtered}
             products={products}
             setProducts={setProducts}
+            search={search}
           />
         </div>
         <div className="cart-wrapper min-w-[300px]  md:-mr-[24px] md:-mt-[24px] border">

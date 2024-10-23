@@ -1,19 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ProductItem from "./ProductItem";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import Add from "./Add";
 import { useNavigate } from "react-router-dom";
 
-const Products = ({ categories, filtered, products, setProducts }) => {
+const Products = ({ categories, filtered, products, setProducts, search }) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const navigate = useNavigate();
   console.log(products);
 
   return (
     <div className="products-wrapper grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4">
-      {filtered.map((item) => (
-        <ProductItem key={item._id} item={item} />
-      ))}
+      {filtered
+        .filter((product) => product.title.toLowerCase().includes(search))
+        .map((item) => (
+          <ProductItem key={item._id} item={item} />
+        ))}
 
       <div
         className="prouct-item border hover:shadow-lg cursor-pointer transition-all select-none bg-purple-800 flex justify-center items-center hover:opacity-90 min-h-[180px]"
