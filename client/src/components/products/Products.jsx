@@ -4,28 +4,14 @@ import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import Add from "./Add";
 import { useNavigate } from "react-router-dom";
 
-const Products = ({ categories }) => {
-  const [products, setProducts] = useState([]);
+const Products = ({ categories, filtered, products, setProducts }) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const navigate = useNavigate();
   console.log(products);
 
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/products/get-all"); // Fetch the products from the server
-        const data = await res.json(); // Convert the response to JSON
-        setProducts(data); // Set the products state to the data
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getProducts();
-  }, []);
-
   return (
     <div className="products-wrapper grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4">
-      {products.map((item) => (
+      {filtered.map((item) => (
         <ProductItem key={item._id} item={item} />
       ))}
 
