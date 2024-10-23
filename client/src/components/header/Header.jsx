@@ -48,7 +48,10 @@ const Header = ({ setSearch }) => {
           />
         </div>
         <div className="menu-links ">
-          <Link to={"/"} className="menu-link ">
+          <Link
+            to={"/"}
+            className={`menu-link ${pathname === "/" ? "active" : ""} `}
+          >
             <HomeOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Home</span>
           </Link>
@@ -58,29 +61,44 @@ const Header = ({ setSearch }) => {
             offset={[0, 0]}
             className="md:flex hidden"
           >
-            <Link to={"/cart"} className="menu-link ">
+            <Link
+              to={"/cart"}
+              className={`menu-link ${pathname === "/cart" ? "active" : ""}`}
+            >
               <ShoppingCartOutlined className="md:text-2xl text-xl" />
               <span className="md:text-xs text-[10px]">Shopping Cart</span>
             </Link>
           </Badge>
-          <Link to={"/bills"} className="menu-link ">
+          <Link
+            to={"/bills"}
+            className={`menu-link ${pathname === "/bills" ? "active" : ""}`}
+          >
             <CopyOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Invoice</span>
           </Link>
-          <Link to={"/customers"} className="menu-link ">
+          <Link
+            to={"/customers"}
+            className={`menu-link ${pathname === "/customers" ? "active" : ""}`}
+          >
             <UserOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Customers</span>
           </Link>
-          <Link to={"/statistic"} className="menu-link  ">
+          <Link
+            to={"/statistic"}
+            className={`menu-link ${pathname === "/statistic" ? "active" : ""}`}
+          >
             <BarChartOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Statistics</span>
           </Link>
-          <Link to={"/stock"} className="menu-link  ">
+          {/* <Link
+            to={"/stock"}
+            className={`menu-link ${pathname === "/stock" ? "active" : ""}`}
+          >
             <StockOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Stock</span>
-          </Link>
+          </Link> */}
           <div onClick={logOut}>
-            <Link className="menu-link ">
+            <Link className={`menu-link `}>
               <LogoutOutlined className="md:text-2xl text-xl" />
               <span className="md:text-xs text-[10px]">Log out</span>
             </Link>
@@ -91,7 +109,10 @@ const Header = ({ setSearch }) => {
           offset={[0, 0]}
           className="md:hidden flex"
         >
-          <Link to={"/"} className="menu-link ">
+          <Link
+            to={"/"}
+            className={`menu-link ${pathname === "/cart" ? "active" : ""}`}
+          >
             <ShoppingCartOutlined className="text-2xl" />
             <span className="md:text-xs text-[10px]">Shopping Cart</span>
           </Link>

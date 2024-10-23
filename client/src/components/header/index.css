@@ -5,3 +5,7 @@
 .menu-link {
   @apply flex flex-col items-center hover:text-[#40a9ff] transition-all gap-y-1;
 }
+
+.menu-link.active {
+  @apply text-[#40a9ff];
+}
