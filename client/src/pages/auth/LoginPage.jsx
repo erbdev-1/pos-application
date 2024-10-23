@@ -8,10 +8,12 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
+
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/auth/login", {
+      const res = await fetch(`${serverUrl}/api/auth/login`, {
         method: "POST",
         body: JSON.stringify(values),
         headers: {

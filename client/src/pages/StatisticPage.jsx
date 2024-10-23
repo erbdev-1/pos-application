@@ -8,7 +8,8 @@ const StatisticPage = () => {
   const [data, setData] = useState();
   const [products, setProducts] = useState([]);
   const user = JSON.parse(localStorage.getItem("posUser"));
-  console.log(user);
+
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
 
   useEffect(() => {
     asyncFetch();
@@ -17,9 +18,7 @@ const StatisticPage = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:5000/api/products/get-all"
-        );
+        const response = await fetch(`${serverUrl}/api/products/get-all`);
         const data = await response.json();
         setProducts(data);
       } catch (error) {
@@ -30,7 +29,7 @@ const StatisticPage = () => {
   }, []);
 
   const asyncFetch = () => {
-    fetch("http://localhost:5000/api/bills/get-all")
+    fetch(`${serverUrl}/api/bills/get-all`)
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => {

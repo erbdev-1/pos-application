@@ -12,14 +12,14 @@ const Add = ({
   // Form instance creation using Ant Design's useForm hook
   const [form] = Form.useForm();
 
-  console.log(categories);
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
 
   // Function to handle form submission
 
   const onFinish = (values) => {
     // console.log(values);
     try {
-      fetch("http://localhost:5000/api/products/add-product", {
+      fetch(`${serverUrl}/api/products/add-product`, {
         method: "POST",
         body: JSON.stringify(values),
         headers: { "Content-type": "application/json; charset=UTF-8" },

@@ -11,11 +11,13 @@ const HomePage = () => {
   const [filtered, setFiltered] = useState([]);
   const [search, setSearch] = useState("");
 
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
+
   // Fetching all categories from the database and setting the state
   useEffect(() => {
     const getCategories = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/categories/get-all");
+        const res = await fetch(`${serverUrl}/api/categories/get-all`);
         const data = await res.json();
 
         data &&
@@ -35,7 +37,7 @@ const HomePage = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/products/get-all"); // Fetch the products from the server
+        const res = await fetch(`${serverUrl}/api/products/get-all`); // Fetch the products from the server
         const data = await res.json(); // Convert the response to JSON
         setProducts(data); // Set the products state to the data
       } catch (error) {

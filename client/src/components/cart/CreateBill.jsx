@@ -10,9 +10,11 @@ const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
+
   const onFinish = async (values) => {
     try {
-      const res = await fetch("http://localhost:5000/api/bills/add-bill", {
+      const res = await fetch(`${serverUrl}/api/bills/add-bill`, {
         method: "POST",
         body: JSON.stringify({
           ...values,

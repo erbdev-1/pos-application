@@ -13,10 +13,12 @@ const BillPage = () => {
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
 
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
+
   useEffect(() => {
     const getBills = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/bills/get-all");
+        const res = await fetch(`${serverUrl}/api/bills/get-all`);
         const data = await res.json();
         setBillItems(data);
       } catch (error) {
