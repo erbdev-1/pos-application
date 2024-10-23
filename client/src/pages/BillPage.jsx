@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Table, Button, Input, Space, Spin } from "antd";
-import Header from "../components/Header/Header";
+import Header from "../components/header/Header";
 import PrintBill from "../components/bills/PrintBill";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";

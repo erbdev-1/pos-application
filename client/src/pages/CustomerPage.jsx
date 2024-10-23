@@ -1,5 +1,5 @@
 import { Spin, Table } from "antd";
-import Header from "../components/Header/Header";
+import Header from "../components/header/Header";
 import { useEffect, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { Button, Input, Space } from "antd";

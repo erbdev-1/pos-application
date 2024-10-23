@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Header from "../components/Header/Header";
+import Header from "../components/header/Header";
 import StatisticCard from "../components/statistics/StatisticCard";
 import { Area, Pie } from "@ant-design/plots";
 import { Spin } from "antd";
